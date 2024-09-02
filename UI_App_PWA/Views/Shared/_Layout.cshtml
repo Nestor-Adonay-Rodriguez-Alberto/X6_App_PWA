@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--header para PWA-->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/x-icon" href="~/img/icono.png">
+    <link rel="manifest" href="/manifest.json">
+    <!--*************************************************************-->
+    <title> App PWA </title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/UI_App_PWA.styles.css" asp-append-version="true" />
+
+
+    <style>
+        body {
+            background-color: white; /*  color de fondo de la página */
+        }
+
+        .navbar {
+            background-color: white; /*  color de fondo de la barra de navegación del menú */
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- Barra De Navegacion MENU: -->
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Facturas" asp-action="Index">INICIO</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">ROLES</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Empleados" asp-action="Index">EMPLEADOS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Facturas" asp-action="Index">FACTURAS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Reporte_PDF_EXCEL" asp-action="Index">REPORTES.</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Graficos" asp-action="GraficoPorVentas">GRAFICOS.</a>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link text-white btn btn-white" id="install-button" asp-area="" style="margin-top:4px; margin-bottom:4px" data-bs-toggle="tooltip" data-bs-placement="top" title="Instalar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M19 9h-4V3H9v6H5l7 8zM4 19h16v2H4z"></path></svg></button>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!--Llamar el service worker para la PWA-->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(function (registration) {
+                        console.log('Service Worker registrado con éxito:', registration);
+                    })
+                    .catch(function (error) {
+                        console.log('Error al registrar el Service Worker:', error);
+                    });
+            });
+        }
+    </script>
+    <!--*****************************************************-->
+    <!--Logica para el boton de instalar la PWA-->
+
+
+    <script>
+        window.addEventListener('beforeinstallprompt', (event) => {
+            event.preventDefault();
+            const installButton = document.getElementById('install-button');
+            installButton.disabled = false;
+            installButton.addEventListener('click', () => {
+                event.prompt();
+                event.userChoice.then((choice) => {
+                    if (choice.outcome === 'accepted') {
+                        console.log('PWA instalada');
+                    } else {
+                        console.log('El usuario canceló la instalación');
+                    }
+                    installButton.disabled = true;
+                });
+            });
+        });
+    </script>
+    <!--**********************************************-->
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

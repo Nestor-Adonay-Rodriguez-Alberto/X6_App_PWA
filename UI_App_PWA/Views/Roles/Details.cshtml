@@ -1,0 +1,24 @@
+﻿@model Entidades.Rol
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalles</h1><br />
+
+<div>
+    <h5>Rol</h5>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayName("Nombre Del Rol:")
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdRol" class="btn btn-primary">Editar</a> |
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</div>

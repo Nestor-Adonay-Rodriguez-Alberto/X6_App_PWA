@@ -1,0 +1,46 @@
+﻿@model Entidades.Factura
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Eliminar</h1><br />
+
+<div>
+    <h5>Datos De La Factura</h5>
+    <hr />
+    <dl class="factura-info">
+        <div class="factura-info-item">
+            <dt>FECHA:</dt>
+            <dd>@Html.DisplayFor(model => model.Fecha)</dd>
+        </div>
+        <div class="factura-info-item">
+            <dt>N° FACTURA:</dt>
+            <dd>@Html.DisplayFor(model => model.Correlativo)</dd>
+        </div>
+        <div class="factura-info-item">
+            <dt>EMPLEADO:</dt>
+            <dd>@Html.DisplayFor(model => model.Objeto_Empleado.Nombre)</dd>
+        </div>
+        <div class="factura-info-item">
+            <dt>CLIENTE:</dt>
+            <dd>@Html.DisplayFor(model => model.Cliente)</dd>
+        </div>
+        <div class="factura-info-item">
+            <dt>TOTAL:</dt>
+            <dd>@Html.DisplayFor(model => model.Total)</dd>
+        </div>
+    </dl>
+
+    <!-- VISTA DETALLE-->
+    <h5>Detalles De Los Productos</h5>
+    <div class="row row-cols-md-12">
+        @await Html.PartialAsync("_Detalle", Model.Lista_DetalleFactura)
+    </div>
+  
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IdFactura" />
+        <input type="submit" value="ELIMINAR" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-secondary">CANCELAR</a>
+    </form>
+</div>

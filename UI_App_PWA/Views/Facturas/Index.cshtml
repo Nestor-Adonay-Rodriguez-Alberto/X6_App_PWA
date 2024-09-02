@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Entidades.Factura>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <h1>Registro de Facturas</h1>
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <a asp-action="Create" class="btn btn-primary">Nueva Factura</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>N° Factura</th>
+                        <th>Empleado</th>
+                        <th>Cliente</th>
+                        <th>Total Compra</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Fecha)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Correlativo)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Objeto_Empleado.Nombre)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Cliente)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Total)</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Acciones">
+                                    <a asp-action="Edit" asp-route-id="@item.IdFactura" class="btn btn-primary rounded">Editar</a>
+                                    <a asp-action="Details" asp-route-id="@item.IdFactura" class="btn btn-secondary rounded">Detalles</a>
+                                    <a asp-action="Delete" asp-route-id="@item.IdFactura" class="btn btn-danger rounded">Eliminar</a>
+                                </div>
+                                <style>
+                                    .btn-group {
+                                        display: flex;
+                                        gap: 5px;
+                                    }
+
+                                    .btn {
+                                        flex: 1;
+                                        border-radius: 5px;
+                                    }
+                                </style>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\UI_App_PWA.props" />
+</Project>

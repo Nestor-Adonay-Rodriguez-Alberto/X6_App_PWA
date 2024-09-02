@@ -1,0 +1,75 @@
+﻿@model Entidades.Factura
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear</h1><br />
+
+<h5>Datos De La Factura</h5>
+<hr />
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <!-- FILA #1 -->
+    <div class="row">
+
+        <div class="form-group col-md-5"> 
+            <label class="control-label">FEHA:</label>
+            <input asp-for="Fecha" class="form-control" />
+            <span asp-validation-for="Fecha" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-2">
+            <label class="control-label">CORRELATIVO:</label>
+            <input readonly asp-for="Correlativo" class="form-control" />
+            <span asp-validation-for="Correlativo" class="text-danger"></span>
+        </div>
+
+    </div>
+
+    <!-- FILA #2 -->
+    <div class="row">
+
+        <div class="form-group col-md-5">
+            <label class="control-label">EMPLEADO:</label>
+            <select asp-for="IdEmpleadoEnFactura" class="form-control" asp-items="ViewBag.Lista_Empleados"></select>
+        </div>
+
+        <div class="form-group col-md-5">
+            <label class="control-label">CLIENTE:</label>
+            <input asp-for="Cliente" class="form-control" />
+            <span asp-validation-for="Cliente" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-2">
+            <label class="control-label">TOTAL:</label>
+            <input readonly asp-for="Total" class="form-control" />
+            <span asp-validation-for="Total" class="text-danger"></span>
+        </div>
+
+    </div><br /><br />
+
+    <!-- VISTA DETALLE-->
+    <h5>Detalles De Los Productos</h5>
+    <div class="row row-cols-md-12">
+        @await Html.PartialAsync("_Detalle",Model.Lista_DetalleFactura)
+    </div>
+
+
+    <!-- BOTONES -->
+    <div class="row">
+
+        <div class="form-group col-md-12">
+            <input type="submit" value="GUARDAR" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">CANCELAR</a>
+        </div>
+
+    </div>
+
+</form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,80 @@
+﻿<script src="https://www.gstatic.com/charts/loader.js"></script>
+
+<!-- GRAFICOS Estilo En wwwroot css -->
+<div class="chart-container">
+    <div id="myChartPastel"></div>
+    <div id="myChartBarra"></div>
+</div>
+
+@section Scripts {
+    <script>
+
+        google.charts.load('current', { 'packages': ['corechart'] });
+        var datosGrafico = {};
+
+        function Grafico_Pastel() {
+
+            // Set Data
+            const data = google.visualization.arrayToDataTable(datosGrafico);
+
+            // Set Options
+            const options =
+            {
+                title: 'Empleados Con Mas Ventas',
+                is3D: true
+            };
+
+            // Draw
+            const chart = new google.visualization.PieChart(document.getElementById('myChartPastel'));
+            chart.draw(data, options);
+
+        }
+
+        function Grafico_Barra() {
+
+            // Set Data
+            const data = google.visualization.arrayToDataTable(datosGrafico);
+
+
+            // Set Options
+            const options = {
+                title: 'Empleados Con Mas Ventas'
+            };
+
+            // Draw
+            const chart = new google.visualization.BarChart(document.getElementById('myChartBarra'));
+            chart.draw(data, options);
+
+        }
+
+        function iniciar() {
+            $.ajax({
+                url: '@Url.Action("GetInfoVentas", "Graficos")',
+                method: "POST",
+                success: function (response) {
+
+                    datosGrafico = [
+                        ['Empleado', 'Facturas']
+                    ];
+
+                    for (var i = 0; i < response.length; i++) {
+                        const item = response[i];
+                        datosGrafico.push([item.grupo, item.cantidad]);
+                    }
+
+                    google.charts.setOnLoadCallback(Grafico_Pastel);
+                    google.charts.setOnLoadCallback(Grafico_Barra);
+
+                },
+                error: function (error) {
+                    console.log("Error creating user:", error);
+                }
+            });
+
+        }
+
+
+        iniciar();
+    </script>
+}
+

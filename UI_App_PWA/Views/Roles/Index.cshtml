@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Entidades.Rol>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Registro De Roles</h1>
+<br />
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Nuevo Rol</a>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayName("Nombre Del Rol:")
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        <div class="d-flex flex-wrap">
+                            <div class="btn-group">
+                                <a asp-action="Edit" asp-route-id="@item.IdRol" class="btn btn-primary rounded">Editar</a>
+                                <a asp-action="Details" asp-route-id="@item.IdRol" class="btn btn-secondary rounded">Detalles</a>
+                                <a asp-action="Delete" asp-route-id="@item.IdRol" class="btn btn-danger rounded">Eliminar</a>
+                            </div>
+                            <style>
+                                .btn-group {
+                                    display: flex;
+                                    gap: 5px;
+                                }
+
+                                .btn {
+                                    flex: 1;
+                                    border-radius: 5px;
+                                }
+                            </style>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

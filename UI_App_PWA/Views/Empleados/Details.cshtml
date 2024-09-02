@@ -1,0 +1,60 @@
+﻿@model Entidades.Empleado
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalles</h1><br />
+
+<div>
+    <h5>Datos Del Empleado</h5>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayName("NOMBRE:")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayName("SUELDO:")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Sueldo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayName("ROL:")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Objeto_Rol.Nombre)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayName("FOTOGRAFIA:")
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                string ImagenBase64 = "";
+                if (Model.Fotografia != null && Model.Fotografia.Length > 0)
+                {
+                    string Cadena_Imagen = Convert.ToBase64String(Model.Fotografia);
+                    ImagenBase64 = "data:image/jpeg;base64," + Cadena_Imagen;
+                }
+                if (ImagenBase64.Trim().Length > 0)
+                {
+                    <img id="VistaImagenEmpleado" src="@ImagenBase64" style="max-width:100px; max-height:100px" />
+                }
+                else
+                {
+                    <img id="VistaImagenEmpleado" src="~/img/defecto.jpg" style="max-width:100px; max-height:100px" />
+                }
+            }
+        </dd>
+    </dl>
+
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdEmpleado" class="btn btn-primary">EDITAR</a> |
+    <a asp-action="Index" class="btn btn-secondary">CANCELAR</a>
+</div>

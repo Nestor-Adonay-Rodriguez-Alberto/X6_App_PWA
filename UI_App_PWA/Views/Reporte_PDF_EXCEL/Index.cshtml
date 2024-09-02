@@ -1,0 +1,30 @@
+﻿
+<form asp-action="Generar_Reporte">
+    <div class="row">
+
+        <div class="form-group col-md-5">
+            <label class="control-label">EMPLEADO:</label>
+            <select class="form-select" name="Empleado" asp-items="ViewBag.Lista_Empleados"></select>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label class="control-label">TIPO REPORTE:</label>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Opcion" id="pdfOption" value="PDF" checked>
+                <label class="form-check-label" for="pdfOption">PDF</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Opcion" id="excelOption" value="EXCEL">
+                <label class="form-check-label" for="excelOption">EXCEL</label>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-secondary">Generar reporte</button>
+    </div>
+</form>

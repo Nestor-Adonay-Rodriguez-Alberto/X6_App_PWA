@@ -1,0 +1,51 @@
+﻿@model Entidades.Factura
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<h1>Detalles</h1>
+
+<hr />
+
+<div class="factura-details">
+    <h5 class="section-title">Datos de la Factura</h5>
+    <dl class="factura-info">
+        <div class="factura-info-item">
+            <dt>FECHA:</dt>
+            <dd>@Html.DisplayFor(model => model.Fecha)</dd>
+        </div>
+        <div class="factura-info-item">
+            <dt>N° FACTURA:</dt>
+            <dd>@Html.DisplayFor(model => model.Correlativo)</dd>
+        </div>
+        <div class="factura-info-item">
+            <dt>EMPLEADO:</dt>
+            <dd>@Html.DisplayFor(model => model.Objeto_Empleado.Nombre)</dd>
+        </div>
+        <div class="factura-info-item">
+            <dt>CLIENTE:</dt>
+            <dd>@Html.DisplayFor(model => model.Cliente)</dd>
+        </div>
+        <div class="factura-info-item">
+            <dt>TOTAL:</dt>
+            <dd>@Html.DisplayFor(model => model.Total)</dd>
+        </div>
+    </dl>
+</div>
+
+<hr />
+
+<div class="factura-details">
+    <h5 class="section-title">Detalles de los Productos</h5>
+    <div class="row row-cols-md-12">
+        @await Html.PartialAsync("_Detalle", Model.Lista_DetalleFactura)
+    </div>
+</div>
+
+<hr />
+
+<div class="factura-actions">
+    <a asp-action="Edit" asp-route-id="@Model?.IdFactura" class="btn btn-primary">EDITAR</a>
+    <a asp-action="Index" class="btn btn-secondary">CANCELAR</a>
+</div>
